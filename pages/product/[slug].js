@@ -10,26 +10,19 @@ import {
   Card,
   Button,
 } from '@material-ui/core';
-// import { useRouter } from 'next/router';
-// import data from '../../utils/data';
 import Layout from '../../components/Layout';
 import useStyles from '../../utils/styles';
 import Product from '../../models/Product';
 import db from '../../utils/db';
 import axios from 'axios';
 import { Store } from '../../utils/Store';
-// import { useRouter } from 'next/router';
-
-
+import { useRouter } from 'next/router';
 
 export default function ProductScreen(props) {
-  // const router = useRouter();
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const { product } = props;
   const classes = useStyles();
-  // const router = useRouter();
-  // const { slug } = router.query;
-  // const product = data.products.find((a) => a.slug === slug);
   if (!product) {
     return <div>Product Not Found</div>;
   }
@@ -37,12 +30,12 @@ export default function ProductScreen(props) {
     const existItem = state.cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock <=  quantity) {
+    if (data.countInStock < quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity} });
-    // router.push('/cart');
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
+    router.push('/cart');
   };
 
   return (
@@ -113,7 +106,7 @@ export default function ProductScreen(props) {
                 </Grid>
               </ListItem>
               <ListItem>
-              <Button
+                <Button
                   fullWidth
                   variant="contained"
                   color="primary"
@@ -129,7 +122,6 @@ export default function ProductScreen(props) {
     </Layout>
   );
 }
-
 
 export async function getServerSideProps(context) {
   const { params } = context;

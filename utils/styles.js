@@ -30,5 +30,15 @@ const useStyles = makeStyles({
     maxWidth: 800,
     margin: '0 auto',
   },
+  navbarButton: {
+    color: '#ffffff',
+    textTransform: 'initial',
+  },
+  transparentBackgroud: {
+    backgroundColor: 'transparent',
+  },
+  error: {
+    color: '#f04040',
+  },
 });
 export default useStyles;
