@@ -30,7 +30,6 @@ function CartScreen() {
   const {
     cart: { cartItems },
   } = state;
-
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
     if (data.countInStock < quantity) {
@@ -95,8 +94,9 @@ function CartScreen() {
                         </NextLink>
                       </TableCell>
                       <TableCell align="right">
-                        <Select value={item.quantity}
-                         onChange={(e) =>
+                        <Select
+                          value={item.quantity}
+                          onChange={(e) =>
                             updateCartHandler(item, e.target.value)
                           }
                         >
@@ -109,7 +109,11 @@ function CartScreen() {
                       </TableCell>
                       <TableCell align="right">${item.price}</TableCell>
                       <TableCell align="right">
-                        <Button variant="contained" color="secondary" onClick={() => removeItemHandler(item)}>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => removeItemHandler(item)}
+                        >
                           x
                         </Button>
                       </TableCell>
@@ -130,7 +134,7 @@ function CartScreen() {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                <Button
+                  <Button
                     onClick={checkoutHandler}
                     variant="contained"
                     color="primary"
@@ -147,6 +151,5 @@ function CartScreen() {
     </Layout>
   );
 }
-
 
 export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
