@@ -41,5 +41,8 @@ const useStyles = makeStyles({
   error: {
     color: '#f04040',
   },
+  toolbar: {
+    justifyContent: 'space-between',
+  },
 });
 export default useStyles;
