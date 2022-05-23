@@ -110,7 +110,7 @@ function Order({ params }) {
         dispatch({ type: 'DELIVER_RESET' });
       }
     }
-  }, [order,successDeliver]);
+  }, [order, orderId, router, successDeliver, successPay, userInfo]);
   const {  enqueueSnackbar } = useSnackbar();
 
 
