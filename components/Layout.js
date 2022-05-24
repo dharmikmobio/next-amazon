@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from 'react';
-import Head from 'next/head';
-import NextLink from 'next/link';
+import React, { useContext } from "react";
+import Head from "next/head";
+import NextLink from "next/link";
 import {
   AppBar,
   Toolbar,
@@ -24,19 +24,19 @@ import {
   Divider,
   ListItemText,
   InputBase,
-} from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import CancelIcon from '@material-ui/icons/Cancel';
-import SearchIcon from '@material-ui/icons/Search';
-import { getError } from '../utils/error';
-import useStyles from '../utils/styles';
-import { Store } from '../utils/Store';
-import Cookies from 'js-cookie';
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useSnackbar } from 'notistack';
-import axios from 'axios';
-import { useEffect } from 'react';
+} from "@material-ui/core";
+import MenuIcon from "@material-ui/icons/Menu";
+import CancelIcon from "@material-ui/icons/Cancel";
+import SearchIcon from "@material-ui/icons/Search";
+import { getError } from "../utils/error";
+import useStyles from "../utils/styles";
+import { Store } from "../utils/Store";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useSnackbar } from "notistack";
+import axios from "axios";
+import { useEffect } from "react";
 
 export default function Layout({ title, description, children }) {
   const router = useRouter();
@@ -45,23 +45,23 @@ export default function Layout({ title, description, children }) {
   const theme = createMuiTheme({
     typography: {
       h1: {
-        fontSize: '1.6rem',
+        fontSize: "1.6rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
       h2: {
-        fontSize: '1.4rem',
+        fontSize: "1.4rem",
         fontWeight: 400,
-        margin: '1rem 0',
+        margin: "1rem 0",
       },
     },
     palette: {
-      type: darkMode ? 'dark' : 'light',
+      type: darkMode ? "dark" : "light",
       primary: {
-        main: '#f0c000',
+        main: "#f0c000",
       },
       secondary: {
-        main: '#208080',
+        main: "#208080",
       },
     },
   });
@@ -83,11 +83,11 @@ export default function Layout({ title, description, children }) {
       const { data } = await axios.get(`/api/products/categories`);
       setCategories(data);
     } catch (err) {
-      enqueueSnackbar(getError(err), { variant: 'error' });
+      enqueueSnackbar(getError(err), { variant: "error" });
     }
   };
 
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const queryChangeHandler = (e) => {
     setQuery(e.target.value);
   };
@@ -100,9 +100,9 @@ export default function Layout({ title, description, children }) {
     fetchCategories();
   }, []);
   const darkModeChangeHandler = () => {
-    dispatch({ type: darkMode ? 'DARK_MODE_OFF' : 'DARK_MODE_ON' });
+    dispatch({ type: darkMode ? "DARK_MODE_OFF" : "DARK_MODE_ON" });
     const newDarkMode = !darkMode;
-    Cookies.set('darkMode', newDarkMode ? 'ON' : 'OFF');
+    Cookies.set("darkMode", newDarkMode ? "ON" : "OFF");
   };
   const [anchorEl, setAnchorEl] = useState(null);
   const loginClickHandler = (e) => {
@@ -116,21 +116,21 @@ export default function Layout({ title, description, children }) {
   };
   const logoutClickHandler = () => {
     setAnchorEl(null);
-    dispatch({ type: 'USER_LOGOUT' });
-    Cookies.remove('userInfo');
-    Cookies.remove('cartItems');
-    router.push('/');
+    dispatch({ type: "USER_LOGOUT" });
+    Cookies.remove("userInfo");
+    Cookies.remove("cartItems");
+    router.push("/");
   };
   return (
     <div>
       <Head>
-        <title>{title ? `${title} - Next Amazon` : 'Next Amazon'}</title>
+        <title>{title ? `${title} - Next Amazon` : "Next Amazon"}</title>
         {description && <meta name="description" content={description}></meta>}
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar position="static" className={classes.navbar}>
-        <Toolbar className={classes.toolbar}>
+          <Toolbar className={classes.toolbar}>
             <Box display="flex" alignItems="center">
               <IconButton
                 edge="start"
@@ -192,6 +192,7 @@ export default function Layout({ title, description, children }) {
                   className={classes.searchInput}
                   placeholder="Search products"
                   onChange={queryChangeHandler}
+                  autoComplete="off"
                 />
                 <IconButton
                   type="submit"
@@ -209,7 +210,7 @@ export default function Layout({ title, description, children }) {
               ></Switch>
               <NextLink href="/cart" passHref>
                 <Link>
-                <Typography component="span">
+                  <Typography component="span">
                     {cart.cartItems.length > 0 ? (
                       <Badge
                         color="secondary"
@@ -218,7 +219,7 @@ export default function Layout({ title, description, children }) {
                         Cart
                       </Badge>
                     ) : (
-                      'Cart'
+                      "Cart"
                     )}
                   </Typography>
                 </Link>
@@ -240,14 +241,14 @@ export default function Layout({ title, description, children }) {
                     open={Boolean(anchorEl)}
                     onClose={loginMenuCloseHandler}
                   >
-                       <MenuItem
-                      onClick={(e) => loginMenuCloseHandler(e, '/profile')}
+                    <MenuItem
+                      onClick={(e) => loginMenuCloseHandler(e, "/profile")}
                     >
                       Profile
                     </MenuItem>
                     <MenuItem
                       onClick={(e) =>
-                        loginMenuCloseHandler(e, '/order-history')
+                        loginMenuCloseHandler(e, "/order-history")
                       }
                     >
                       Order Hisotry
@@ -255,7 +256,7 @@ export default function Layout({ title, description, children }) {
                     {userInfo.isAdmin && (
                       <MenuItem
                         onClick={(e) =>
-                          loginMenuCloseHandler(e, '/admin/dashboard')
+                          loginMenuCloseHandler(e, "/admin/dashboard")
                         }
                       >
                         Admin Dashboard
@@ -266,7 +267,7 @@ export default function Layout({ title, description, children }) {
                 </>
               ) : (
                 <NextLink href="/login" passHref>
-                <Link>
+                  <Link>
                     <Typography component="span">Login</Typography>
                   </Link>
                 </NextLink>
